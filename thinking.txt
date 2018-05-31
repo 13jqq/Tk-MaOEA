@@ -1,0 +1,94 @@
+# Tk-MaOEA
+Algorithm 1 Main Framework of Tk-MaOEA
+Input: N (population size), Max_Gen ( the maximum number of generations), TN(after transfer objectives number )
+Output: P (final population)
+1: /* 初始化父种群 */
+2: Randomly initialize a population P0 with N individuals //N个个体，P0
+3: Trt = zeros(N, TN)
+4: /* Main Loop */
+5: While t ≤ Max_Gen do
+6: P't = Mating Selection(P,B)//交叉
+7: Qt = Variation(P't)//变异
+8: S = Pt ∪ Qt//不知道为啥要交，，而且锦标赛算法是不是没写
+//9-12是矩阵转换
+9: T=Transfer matrix(Pt, TN)
+10: Trt = St * T
+11: Multi-scale normalization(Trt)  
+12: Totalt=[Pt, Trt]
+13: P = Environmental Selection (Totalt) //利用FSC求精英
+12: t + +
+13:  End While
+
+
+Algorithm 2. Transfer matrix
+Input: P(population), TN(after transfer objectives number )
+Output: transfer Matrix T
+1:  /*find the best individual选最好 */
+2:  p*={p|best(P)}, p P
+3:  p*=normalization(p*)
+
+4: While i< TN do
+5:  /* find the T N-1 linearly independent unit vectors et with p* */
+6:  p*= p*  et
+7:  i++
+
+8:  End While 
+
+
+
+9:  p*T =Gram-Schmidt Orthogonalization(p*T)
+10:  T=[p*T]
+11: Return T.
+
+Algorithm 3. Gram-Schmidt Orthogonalization
+Input: X(matrix)
+Output: Matrix X*
+1:  x1*=x1   /* X=[x1,x2,...,xTN] */
+2:    x1*=normalization(x1*)
+3:  While i< TN do
+4:  x1*=xi - 
+5:  xi*= normalization(xi*)
+6:   i++
+7: End While 
+8: X*=[x1*,x*2,...,xTN*] 
+9: Return X*.
+
+
+Algorithm 4 Environmental selection
+Input: P (combined population)
+Output: P' (new population)
+1: P =∅, i=1;
+3: (F1,F2,...) = Non-dominated-sorting (P)      
+4:  While |P|+|Fi|<N+1
+5:     P= P   Fi and i=i+1
+6:    End While
+7:    The last front to be included Fl=Fi
+8:    If |P| = N
+9:      return P
+10:    Else 
+11:     /* Apply FCS strategy */
+12:       Solutions to be selected from Fl: K=N-|P|
+13:       Choose K solutions one by one from Fl to form the final P'. 
+14:    End If
+15: Return P'
+
+
+
+Algorithm 5. The FCS method
+1:  Saccept = ; 
+2:       D[xi]=0, i=1,2…, N;   
+3:  For each objective function fj(x), j=1,2…,m   
+4:       Saccept = Saccept  (fj(x))  (fj(x));
+5:  Let Sm[x]=P-Saccept, for each individual x Sm,
+6:      D[xi] (dis(x,x’));   
+7:   For i=1 to K-|Saccept|
+8:     x1= (D[x]);
+9:       For each x2 P-Saccept
+10:        D[x2] min(D[x2],dis(x,x’));
+11:         Saccept Saccept x1 
+12:      End For
+13:     End For  
+
+
+
+
