@@ -26,7 +26,7 @@ Output: transfer Matrix T
 1:  /*find the best individual选最好 */
 2:  p*={p|best(P)}, p P
 3:  p*=normalization(p*)
-
+//通过p*确定TN-1线性无关单位矢量
 4: While i< TN do
 5:  /* find the T N-1 linearly independent unit vectors et with p* */
 6:  p*= p*  et
@@ -36,18 +36,28 @@ Output: transfer Matrix T
 
 
 
-9:  p*T =Gram-Schmidt Orthogonalization(p*T)
+9:  p*T =Gram-Schmidt Orthogonalization(p*T)//正交化
 10:  T=[p*T]
 11: Return T.
 
-Algorithm 3. Gram-Schmidt Orthogonalization
+//得到的矩阵第一列是该方向上的最佳个体，其他列是正交方向上的最佳个体，每列都是一个单位（unit）
+
+
+//该算法的得出是传递矩阵可用来指导种群中其他个体学习，利用最佳个体方向和垂直个体方向上的mapping len用于转移学习？？？（不是很明白如何利用这个值）
+//因此大量目标可以用少量目标表示
+
+
+//线性无关矢量转正交-->算法三GSO  
+
+
+Algorithm 3. Gram-Schmidt Orthogonalization矩阵正交化
 Input: X(matrix)
 Output: Matrix X*
 1:  x1*=x1   /* X=[x1,x2,...,xTN] */
-2:    x1*=normalization(x1*)
+2:    x1*=normalization(x1*)//第一个矢量的归一化
 3:  While i< TN do
-4:  x1*=xi - 
-5:  xi*= normalization(xi*)
+4:  x1*=xi -
+5:  xi*= normalization(xi*)//每个矢量归一化
 6:   i++
 7: End While 
 8: X*=[x1*,x*2,...,xTN*] 
